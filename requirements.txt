@@ -1,0 +1,4 @@
+ansible==7.1.0
+ansible-pylibssh==1.1.0
+boto3==1.26.83
+pynetbox==6.6.0
