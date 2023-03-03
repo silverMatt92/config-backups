@@ -1,0 +1,41 @@
+---
+- name: IOS CISCO
+  block:
+    - name: Backup IOS Device
+      vars:
+        ansible_user: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          61616630383730333630393730336636333037333337356537366434663336363862663734323564
+          3532623734366332356435613066613335383164326130620a643137643265353537623935623238
+          61643065346465316635303737316564343836396332616536323965346137383565663834303061
+          3465386362376663300a303335666265373339363333396463386336383535346537336563616664
+          34616561333937346231383163316664636261616637343336626162613662303133
+        ansible_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          35336135356337613031626562373062363538616466373632323433353631383661633839626636
+          3531653664626236613966376166666439653263303538640a356364346237383165303939646565
+          36373938343261626535666162386138396438373338663539383235376664656164633232613631
+          6662646634376434370a616631666331363637663134393438666264356330306633383362363665
+          35623965386536663261356664313332396461303333636536306530386662323231
+      ios_config:
+         backup: yes
+         backup_options:
+           filename: "{{ net_backup_filename }}"
+           dir_path: "{{ network_backup_dir }}"
+      register: backupinfo
+
+    - name: Add SUCCESS line to file
+      ansible.builtin.lineinfile:
+        path: /home/mattia/repos/config-backups/configuration-backup-manager/templates/successful_hosts.txt
+        line: "{{ inventory_hostname }}"
+      when: backupinfo is defined
+      delegate_to: localhost
+      throttle: 1
+
+  rescue:
+    - name: Add ERROR line to file
+      ansible.builtin.lineinfile:
+        path: /home/mattia/repos/config-backups/configuration-backup-manager/templates/failed_hosts.txt
+        line: "{{ inventory_hostname }}"
+      delegate_to: localhost
+      throttle: 1

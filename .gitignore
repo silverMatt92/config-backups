@@ -1,0 +1,9 @@
+# vaultkeyfile for ansible-vault encryption/decryption
+vaultkeyfile
+
+# Python venv
+env/
+
+# Output files
+configuration-backup-manager/config-backups/*
+configuration-backup-manager/templates/*

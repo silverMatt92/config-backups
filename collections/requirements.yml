@@ -1,0 +1,13 @@
+---
+collections:
+  - name: junipernetworks.junos
+    source: https://galaxy.ansible.com
+    version: 2.3.0
+  - name: juniper.device
+    source: https://galaxy.ansible.com
+  - name: cisco.ios
+    source: https://galaxy.ansible.com
+    version: 4.0.0
+  - name: netbox.netbox
+    source: https://galaxy.ansible.com
+    version: 3.8.1
